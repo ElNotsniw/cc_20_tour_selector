@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import Gallery from "./components/Gallery";
 import DestinationSelector from "./components/DestinationSelector";
-import { use } from "react";
 
-const url = "https://course-api.com/react-tours-project";
+const url = "https://api.allorigins.win/raw?url=https://course-api.com/react-tours-project";
 
 // Creating an App function to fetch data from the API and display it
 
@@ -61,7 +60,7 @@ function App() {
         <h1 className = "text-3xl font-bold text-center my-8">Tour Gallery</h1>
         <DestinationSelector
         tours={tours}
-        destinations={destinations}
+        destinations={destination}
         setDestination={setDestination}
         />
         <Gallery
