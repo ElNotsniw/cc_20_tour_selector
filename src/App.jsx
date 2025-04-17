@@ -1,65 +1,77 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
+import Gallery from "./components/Gallery";
+import DestinationSelector from "./components/DestinationSelector";
+import { use } from "react";
 
-const Tours = () => {
+const url = "https://course-api.com/react-tours-project";
+
+// Creating an App function to fetch data from the API and display it
+
+function App() {
   const [tours, setTours] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [destination, setDestination] = useState("all");
   const [error, setError] = useState(null);
+  const [filteredTours, setFilteredTours] = useState([]);
 
-  const url = 'https://course-api.com/react-tours-project';
+  // Fetching the data from the API
+
+  const fetchTours = async () => {
+    try {
+      setLoading (true);
+      const response = await fetch(url);
+      const data = await response.json();
+      setTours(data);
+      setFilteredTours(data);
+      setError(null);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchTours = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setTours(data);
-        setError(null);
-      } catch (error) {
-        setError(error.message);
-        setTours([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchTours();
   }, []);
 
-  if (loading) {
-    return <div className="loading">Loading...</div>;
-  }
+  // Filtering the tours based on the destination, removing the tours that are not in the destination, and refreshing the data
 
-  if (error) {
-    return <div className="error">{error}</div>;
-  }
+  useEffect(() => {
+    if (destination === "all") {
+      setFilteredTours(tours);
+    } else {
+      const filtered = tours.filter((tour) => tour.destination === destination);
+      setFilteredTours(filtered);
+    }, [destinations, tours]);
 
-  return (
-    <section>
-      <div className="title">
-        <h2>Our Tours</h2>
-        <div className="underline"></div>
-      </div>
-      <div className="tours">
-        {tours.map((tour) => {
-          const { id, image, info, price, name } = tour;
-          return (
-            <article key={id} className="tour">
-              <img src={image} alt={name} />
-              <div className="tour-info">
-                <h3>{name}</h3>
-                <p>{info}</p>
-                <span>${price}</span>
-              </div>
-            </article>
-          );
-        })}
-      </div>
-    </section>
+    const removeTour = (id) => {
+      setTours(tours.filter((tour) => tour.id !== id));
+    };
+
+    const refresh = () => {
+      fetchTours();
+    };
+
+    // Rendering the component with the filtered tours and the loading state
+
+    return (
+      <main>
+        <h1 className = "text-3xl font-bold text-center my-8">Tour Gallery</h1>
+        <DestinationSelector
+        tours={tours}
+        destinations={destinations}
+        setDestination={setDestination}
+        />
+        <Gallery
+        tours={filteredTours}
+        loading={loading}
+        error={error}
+        removeTour={removeTour}
+        refresh={refresh}
+        />
+      </main>
     );
   };
 
-  export default Tours;
+  export default App;
