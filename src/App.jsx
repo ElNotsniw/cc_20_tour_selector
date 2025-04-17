@@ -43,8 +43,9 @@ function App() {
     } else {
       const filtered = tours.filter((tour) => tour.destination === destination);
       setFilteredTours(filtered);
-    }, [destinations, tours]);
-
+      }
+    }, [destination, tours]);
+  
     const removeTour = (id) => {
       setTours(tours.filter((tour) => tour.id !== id));
     };
