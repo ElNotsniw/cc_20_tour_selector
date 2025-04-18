@@ -8,17 +8,17 @@ function DestinationSelector({ tours, destinations, setDestination }) {
     return (
         <div className="flex justify-center my-4">
             <select
-            value={destinations}
-            onChange={(e) => setDestination(e.target.value)}
-            className = "border border-gray-300 rounded p-2"
+                value={destinations}
+                onChange={(e) => setDestination(e.target.value)}
+                className="border border-gray-300 rounded p-2"
             >
-                {uniqueDestinations.map((destination, index) => (
-                    <option key={`${destination}-${index}`} value={destination}>
-                        {destination}
+                {uniqueDestinations.map((destinations) => (
+                    <option key={`${destinations}`} value={destinations}>
+                        {destinations}
                     </option>
                 ))}
             </select>
-            </div>
+        </div>
     );
 };
 
