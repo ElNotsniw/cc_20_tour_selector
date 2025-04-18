@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Gallery from "./components/Gallery";
-import DestinationSelector from "./components/DestinationSelector";
+import Gallery from "./components/Gallery.jsx";
+import DestinationSelector from "./components/DestinationSelector.jsx";
 
 const url = "https://api.allorigins.win/raw?url=https://course-api.com/react-tours-project";
 

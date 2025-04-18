@@ -1,7 +1,7 @@
 // Creating a dropdown feature to filter the tours based on the destination
 
 function DestinationSelector({ tours, destinations, setDestination }) {
-    const uniqueDestinations = ["All", ...new Set(tours.map((tour) => tour.destination))];
+    const uniqueDestinations = ["All Destinations", ...new Set(tours.map((tour) => tour.destination))];
 
 // Setting the default value of the dropdown to "All" and filtering the tours based on the destination
     

@@ -1,4 +1,4 @@
-import TourCard from "./TourCard";
+import TourCard from "./TourCard.jsx";
 
 // This component displays a gallery of tours with loading and error states
 
